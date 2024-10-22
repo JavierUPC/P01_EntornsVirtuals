@@ -930,8 +930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5dfa95fec552c418e84ce25623fcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraprimerapersona: {fileID: 0}
-  cameratercerapersona: {fileID: 0}
+  firstPersonCamera: {fileID: 1093119953}
+  thirdPersonCamera: {fileID: 188268386}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

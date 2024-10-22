@@ -2,35 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeCam : MonoBehaviour
+using UnityEngine;
+
+public class CameraSwitch : MonoBehaviour
 {
-    public Camera cameraprimerapersona;  
-    public Camera cameratercerapersona;  
+    //asiganr en unity las camaras de primera y segunda persona
+    public Camera firstPersonCamera; 
+    public Camera thirdPersonCamera; 
 
-    //començar amb primera persona
-    private bool isFirstPerson = true;
-
-    void Start()
+    private void Start()
     {
-        //camera primera persona activa principi 
-        cameraprimerapersona.gameObject.SetActive(true);
-        cameratercerapersona.gameObject.SetActive(false);
+        //activamos la camara en primera persona i desactivamos la tercera
+        firstPersonCamera.gameObject.SetActive(true);
+        thirdPersonCamera.gameObject.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-         if (Input.GetKeyDown(KeyCode.F5))
+        //condicional si se presiona el boton f5
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             SwitchCamera();
         }
     }
 
-void SwitchCamera()
+    private void SwitchCamera()
     {
-
-        // Cambia estat de les camares
-        //Activar desactivar camaras
-       
+        // activamos la camara pertinente si estamos en 1ra persona a 3ra y al reves
+        if (firstPersonCamera.gameObject.activeSelf)
+        {
+            firstPersonCamera.gameObject.SetActive(false);
+            thirdPersonCamera.gameObject.SetActive(true);
+        }
+        else
+        {
+            firstPersonCamera.gameObject.SetActive(true);
+            thirdPersonCamera.gameObject.SetActive(false);
+        }
     }
-
 }
