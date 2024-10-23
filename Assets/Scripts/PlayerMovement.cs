@@ -40,16 +40,22 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
-        if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
+        //Salto - el "airtime" depende del tiempo que se mantenga el botón presionado
+        if (floored && Input.GetKeyDown(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
             timer += Time.deltaTime;
         }
-        if ((Input.GetKeyUp(KeyCode.Space) || timer >= 1) && FloorChecker.GetComponent<Floored>().IsFloored())
+        else if (Input.GetKey(KeyCode.Space) && timer > 0 && timer <= 0.5)
         {
-            Jump(timer);
+            timer += Time.deltaTime;
+            Jump();
+        }
+        else if(Input.GetKeyUp(KeyCode.Space) || timer >0.5)
+        {
             timer = 0;
         }
 
+        //Rotación horizontal del personaje segun el movimiento del ratón
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
@@ -57,9 +63,9 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
     }
 
-    private void Jump(float tiempo)
+    private void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce+tiempo*2, rb.velocity.z);
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce/(1+Mathf.Pow(timer,2)), rb.velocity.z);
     }
 
     private void OnCollisionEnter(Collision collision)
