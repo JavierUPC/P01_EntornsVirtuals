@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float mouseX, moveX, moveZ;
 
+    private float timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            timer += Time.deltaTime;
+        }
+        if ((Input.GetKeyUp(KeyCode.Space) || timer >= 1) && FloorChecker.GetComponent<Floored>().IsFloored())
+        {
+            Jump(timer);
+            timer = 0;
         }
 
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -48,6 +55,11 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
 
         Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
+    }
+
+    private void Jump(float tiempo)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce+tiempo*2, rb.velocity.z);
     }
 
     private void OnCollisionEnter(Collision collision)
