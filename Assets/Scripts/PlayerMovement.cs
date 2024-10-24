@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
     }
 
+
     private void Jump()
     {
         rb.velocity = new Vector3(rb.velocity.x, jumpForce/(1+Mathf.Pow(timer,2)), rb.velocity.z);
