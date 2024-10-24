@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject FloorChecker;
+    public Animator ArmsAnimaton; // Asegúrate de que este es el nombre correcto
+
 
     private Rigidbody rb;
     private Collider coll;
@@ -37,6 +39,25 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
+
+
+
+
+
+        // Cambiar la animación de los brazos dependiendo de si el personaje se está moviendo
+        if (moveX != 0 || moveZ != 0) // Si el personaje se está moviendo
+        {
+            ArmsAnimaton.SetBool("isWalking", true); // Activar la animación de caminar
+        }
+        else // Si el personaje está quieto
+        {
+            ArmsAnimaton.SetBool("isWalking", false); // Activar la animación de idle
+        }
+
+
+
+
+
 
         if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
