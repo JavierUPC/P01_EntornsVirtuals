@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     private float mouseX, moveX, moveZ;
 
+    //variable codigo correr
+    public float runSpeed = 12f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +52,12 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
 
         Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
+
+        //codigo correr
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed * runSpeed );
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
