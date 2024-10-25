@@ -59,8 +59,6 @@ public class PlayerMovement : MonoBehaviour
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
-
-        Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
     }
 
 
