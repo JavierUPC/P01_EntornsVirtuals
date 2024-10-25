@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Cambiar la animación de los brazos dependiendo de si el personaje se está moviendo
-        if (moveX != 0 || moveZ != 0) // Si el personaje se está moviendo
+        if (move.x != 0 || move.z != 0) // Si el personaje se está moviendo
         {
             ArmsAnimaton.SetBool("isWalking", true); // Activar la animación de caminar
         }
