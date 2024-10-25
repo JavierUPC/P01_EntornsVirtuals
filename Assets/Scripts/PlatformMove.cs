@@ -18,12 +18,7 @@ public class PlatformMove : MonoBehaviour
     public bool onPlatform = false;
 
     private Rigidbody onPlatformRb;
-    private Rigidbody platformRb;
-
-    private void Start()
-    {
-        platformRb = GetComponent<Rigidbody>();
-    }
+    private Vector3 platformSpeed;
 
     private void OnValidate()
     {
@@ -40,39 +35,33 @@ public class PlatformMove : MonoBehaviour
 
         Vector3 targetPos = checkpoints[currentCheckpointIndex].position;
 
-        Vector3 direction = (targetPos - transform.position).normalized;
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.fixedDeltaTime);
 
-        Vector3 desiredVelocity = direction * speed;
+        Vector3 direction = (targetPos - transform.position).normalized; 
+        platformSpeed = direction * speed; 
 
-        platformRb.velocity = new Vector3(desiredVelocity.x, platformRb.velocity.y, desiredVelocity.z);
-
-        if (Vector3.Distance(transform.position, targetPos) < 0.1f) // Margin of error
+        if (Vector3.Distance(transform.position, targetPos) < 0.1f) //Margen de error
         {
             currentCheckpointIndex = (currentCheckpointIndex + 1) % checkpoints.Count;
         }
 
         if (onPlatform)
         {
-            onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformRb.velocity.x, onPlatformRb.velocity.y, onPlatformRb.velocity.z + platformRb.velocity.z);
+            onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y, onPlatformRb.velocity.z + platformSpeed.z);
         }
-
-        Debug.Log(platformRb.velocity.z);
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
         onPlatformRb = collision.rigidbody;
         onPlatform = true;
     }
-
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.rigidbody == onPlatformRb)
-        {
-            onPlatform = false;
-            onPlatformRb = null;
-        }
+        onPlatform = false;
     }
+
 
     public Vector3 GetCheckpointPosition(int index)
     {
@@ -80,7 +69,7 @@ public class PlatformMove : MonoBehaviour
         {
             return checkpoints[index].position;
         }
-        Debug.LogWarning("Not within the index range");
+        Debug.LogWarning("Not withing the index range"); //Para que todas las opciones tengan un return
         return Vector3.zero;
     }
 }
