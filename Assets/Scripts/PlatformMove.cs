@@ -47,7 +47,14 @@ public class PlatformMove : MonoBehaviour
 
         if (onPlatform)
         {
-            onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y, onPlatformRb.velocity.z + platformSpeed.z);
+            if (platformSpeed.y >= 0)
+            {
+                onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y, onPlatformRb.velocity.z + platformSpeed.z);
+            }
+            else
+            {
+                onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y + platformSpeed.y, onPlatformRb.velocity.z + platformSpeed.z);
+            }
         }
     }
 
