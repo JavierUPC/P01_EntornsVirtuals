@@ -55,8 +55,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-
-
+        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje se está moviendo
+        {
+            ArmsAnimaton.SetBool("isJumping", true); // Activar la animación de caminar
+        }
+        else // Si el personaje está quieto
+        {
+            ArmsAnimaton.SetBool("isJumping", false); // Activar la animación de idle
+        }
 
 
         if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
