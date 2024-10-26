@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalAnimation: {fileID: 1432561884}
-  player: {fileID: 1821605281}
+  Switch: {fileID: 1880489054}
 --- !u!65 &867877962
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondTP: {fileID: 1027512457}
-  player: {fileID: 1821605281}
+  Switch: {fileID: 1880489054}
 --- !u!65 &1432561883
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -759,8 +759,8 @@ Transform:
   m_GameObject: {fileID: 1718550186}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.045208, y: -0.16031659, z: 2.9238586}
-  m_LocalScale: {x: 2.22, y: 0.42, z: 16.81}
+  m_LocalPosition: {x: 1.92, y: -0.16031659, z: 2.9238586}
+  m_LocalScale: {x: 12.04, y: 0.42, z: 16.81}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 373114427}
@@ -988,6 +988,7 @@ GameObject:
   - component: {fileID: 1880489057}
   - component: {fileID: 1880489056}
   - component: {fileID: 1880489055}
+  - component: {fileID: 1880489059}
   m_Layer: 0
   m_Name: Switch
   m_TagString: Key
@@ -1081,6 +1082,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1880489059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880489054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d77863233c2af41a64e06b6a71b440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
