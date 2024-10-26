@@ -15,10 +15,16 @@ public class PlatformMove : MonoBehaviour
 
     private int currentCheckpointIndex = 0;
     public float speed = 5f;
-    public bool onPlatform = false;
+    private bool onPlatform = false;
 
     private Rigidbody onPlatformRb;
-    private Vector3 platformSpeed;
+    private Vector3 previousPosition;  
+    private Vector3 platformMovement;  
+
+    private void Start()
+    {
+        previousPosition = transform.position;  
+    }
 
     private void OnValidate()
     {
@@ -35,40 +41,41 @@ public class PlatformMove : MonoBehaviour
 
         Vector3 targetPos = checkpoints[currentCheckpointIndex].position;
 
+        // Move the platform towards the target position
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.fixedDeltaTime);
 
-        Vector3 direction = (targetPos - transform.position).normalized; 
-        platformSpeed = direction * speed; 
+        platformMovement = transform.position - previousPosition;
+        previousPosition = transform.position;  
 
-        if (Vector3.Distance(transform.position, targetPos) < 0.1f) //Margen de error
+        // Check if the platform has reached the target position
+        if (Vector3.Distance(transform.position, targetPos) < 0.1f) // Margin of error
         {
             currentCheckpointIndex = (currentCheckpointIndex + 1) % checkpoints.Count;
         }
 
-        if (onPlatform)
+        if (onPlatform && onPlatformRb != null)
         {
-            if (platformSpeed.y >= 0)
-            {
-                onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y, onPlatformRb.velocity.z + platformSpeed.z);
-            }
-            else
-            {
-                onPlatformRb.velocity = new Vector3(onPlatformRb.velocity.x + platformSpeed.x, onPlatformRb.velocity.y + platformSpeed.y, onPlatformRb.velocity.z + platformSpeed.z);
-            }
+            onPlatformRb.position += platformMovement;
         }
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
-        onPlatformRb = collision.rigidbody;
-        onPlatform = true;
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        onPlatform = false;
+        if (collision.rigidbody != null)  // Check if the collided object has a Rigidbody
+        {
+            onPlatformRb = collision.rigidbody;
+            onPlatform = true;
+        }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.rigidbody == onPlatformRb)
+        {
+            onPlatform = false;
+            onPlatformRb = null;  // Clear the reference to the Rigidbody
+        }
+    }
 
     public Vector3 GetCheckpointPosition(int index)
     {
@@ -76,7 +83,7 @@ public class PlatformMove : MonoBehaviour
         {
             return checkpoints[index].position;
         }
-        Debug.LogWarning("Not withing the index range"); //Para que todas las opciones tengan un return
+        Debug.LogWarning("Not within the index range");
         return Vector3.zero;
     }
 }
