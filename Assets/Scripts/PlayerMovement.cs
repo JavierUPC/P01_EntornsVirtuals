@@ -17,8 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX;
 
     private float mouseX, moveX, moveZ;
-
     private float timer;
+    public float runSpeed = 12f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
-        //Salto - el "airtime" depende del tiempo que se mantenga el botón presionado
+        //Salto - el "airtime" depende del tiempo que se mantenga el botï¿½n presionado
         if (floored && Input.GetKeyDown(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
             timer += Time.deltaTime;
@@ -55,12 +56,17 @@ public class PlayerMovement : MonoBehaviour
             timer = 0;
         }
 
-        //Rotación horizontal del personaje segun el movimiento del ratón
+        //codigo correr
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed * runSpeed );
+        }
+
+        //Rotacion horizontal del personaje segun el movimiento del raton
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
     }
-
 
     private void Jump()
     {
