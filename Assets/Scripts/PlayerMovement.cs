@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         floored = false;
         Cursor.lockState = CursorLockMode.Locked;
         rotationX = 0f;
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -47,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         {
             ArmsAnimaton.SetBool("isWalking", true); // Activar la animaci�n de caminar
         }
-        else // Si el personaje est� quieto
+        else // Si el personaje esta quieto
         {
             ArmsAnimaton.SetBool("isWalking", false); // Activar la animaci�n de idle
         }
@@ -64,17 +65,20 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Salto - el "airtime" depende del tiempo que se mantenga el bot�n presionado
-        if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
+        if (floored && Input.GetKeyDown(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
             timer += Time.deltaTime;
+            Debug.Log("Jump1");
         }
         else if (Input.GetKey(KeyCode.Space) && timer > 0 && timer <= 0.5)
         {
+            Debug.Log("Jump2");
             timer += Time.deltaTime;
             Jump();
         }
         else if(Input.GetKeyUp(KeyCode.Space) || timer >0.5)
         {
+            Debug.Log("Jump3");
             timer = 0;
         }
 
