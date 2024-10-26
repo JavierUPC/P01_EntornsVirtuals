@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject FloorChecker;
+    public Animator ArmsAnimaton; // Aseg�rate de que este es el nombre correcto
+
 
     private Rigidbody rb;
     private Collider coll;
@@ -41,8 +43,28 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
+        if (move.x != 0 || move.z != 0) // Si el personaje se est� moviendo
+        {
+            ArmsAnimaton.SetBool("isWalking", true); // Activar la animaci�n de caminar
+        }
+        else // Si el personaje est� quieto
+        {
+            ArmsAnimaton.SetBool("isWalking", false); // Activar la animaci�n de idle
+        }
+
+
+        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje se est� moviendo
+        {
+            ArmsAnimaton.SetBool("isJumping", true); // Activar la animaci�n de caminar
+        }
+        else // Si el personaje est� quieto
+        {
+            ArmsAnimaton.SetBool("isJumping", false); // Activar la animaci�n de idle
+        }
+
+
         //Salto - el "airtime" depende del tiempo que se mantenga el bot�n presionado
-        if (floored && Input.GetKeyDown(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
+        if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
         {
             timer += Time.deltaTime;
         }
