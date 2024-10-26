@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 public class CameraSwitch : MonoBehaviour
 {
     //asiganr en unity las camaras de primera y segunda persona

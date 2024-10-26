@@ -5,13 +5,13 @@ using UnityEngine;
 public class PortalOpen : MonoBehaviour
 {
     public Animator portalAnimation;
-    public GameObject player;
+    public GameObject Switch;
     private PortalKey portalKey;
 
     // Start is called before the first frame update
     void Start()
     {
-        portalKey = player.GetComponent<PortalKey>();
+        portalKey = Switch.GetComponent<PortalKey>();
     }
 
     // Update is called once per frame

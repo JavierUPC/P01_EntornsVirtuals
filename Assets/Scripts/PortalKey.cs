@@ -14,7 +14,7 @@ public class PortalKey : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Key"))
+        if (other.CompareTag("Player"))
         {
             switchOn = true;
         }
