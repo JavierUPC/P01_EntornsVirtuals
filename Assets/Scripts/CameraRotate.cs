@@ -4,37 +4,38 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
-    public Transform player;            // Reference to the player transform
-    public float mouseSensitivity = 100f;
-    public bool isFirstPersonCamera;    // True for first-person, false for third-person
+    public Transform player;             
+    public float mouseSens = 100f;
+    public bool isFirstPerson;     
 
     private float xRotation = 0f;
+    private Vector3 initialPos;
+    private float mouseY;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        if (!isFirstPerson)
+        {
+            initialPos = transform.position - player.position;
+        }
     }
 
     void Update()
     {
-        // Get mouse input for vertical movement (up and down)
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        // Adjust xRotation based on mouseY to look up and down
+        mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical view angle to avoid flipping
-
-        if (isFirstPersonCamera)
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); 
+        if (isFirstPerson)
         {
-            // First-person: Apply rotation to the camera's local X-axis only
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
         else
         {
-            // Third-person: Rotate the camera up and down around the player's local X-axis
-            Vector3 targetPosition = player.position;
-            transform.position = targetPosition; // Keep camera centered on player
-            transform.localRotation = Quaternion.Euler(xRotation, transform.localEulerAngles.y, 0f);
+            Quaternion rotation = Quaternion.Euler(xRotation, player.eulerAngles.y, 0f);
+            transform.position = player.position + rotation * initialPos;
+            transform.LookAt(player.position + Vector3.up * 1.5f); //Por 1,5 para que enfoque ligeramente por encima de los hombros y no en el centro de la figura
         }
     }
 }

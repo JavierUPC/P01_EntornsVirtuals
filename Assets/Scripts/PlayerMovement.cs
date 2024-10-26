@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 6f;
     public float jumpForce = 10f;
 
-    public float mouseSensitivity = 100f;
+    public float mouseSens = 100f;
     private float rotationX;
 
     private float mouseX, moveX, moveZ;
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Rotacion horizontal del personaje segun el movimiento del raton
-        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
     }
