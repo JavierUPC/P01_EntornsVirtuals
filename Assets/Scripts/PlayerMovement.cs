@@ -85,13 +85,19 @@ public class PlayerMovement : MonoBehaviour
         //codigo correr
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed * runSpeed );
+           Correr(move);
         }
 
         //Rotacion horizontal del personaje segun el movimiento del raton
         mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
+    }
+
+    public void Correr(Vector3 movimiento)
+    {
+
+        rb.velocity = new Vector3(movimiento.x * moveSpeed, rb.velocity.y, movimiento.z * runSpeed);
     }
 
     private void Jump()
