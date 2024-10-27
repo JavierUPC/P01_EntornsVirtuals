@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //codigo correr
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && floored && FloorChecker.GetComponent<Floored>().IsFloored())
         {
            Correr(move);
         }
