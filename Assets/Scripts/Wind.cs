@@ -37,11 +37,14 @@ public class Wind : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        player = other;
-        y = player.transform.position.y;
-        x = false;
-        player.attachedRigidbody.useGravity = false;
-        Debug.Log("Dentro");
+        if (other.CompareTag("Player"))
+        {
+            player = other;
+            y = player.transform.position.y;
+            x = false;
+            player.attachedRigidbody.useGravity = false;
+            Debug.Log("Dentro");
+        }
     }
 
     private void OnTriggerExit(Collider other)
