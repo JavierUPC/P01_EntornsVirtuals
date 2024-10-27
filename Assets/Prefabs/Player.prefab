@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 45560520684739618}
   - component: {fileID: 4586202306802459088}
   - component: {fileID: 850720498577216414}
+  - component: {fileID: 3874352539178557575}
+  - component: {fileID: 9191164771213157226}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -158,7 +160,7 @@ MonoBehaviour:
   ArmsAnimaton: {fileID: 850720498577216414}
   moveSpeed: 3
   jumpForce: 6
-  mouseSensitivity: 500
+  mouseSens: 400
   runSpeed: 12
 --- !u!95 &850720498577216414
 Animator:
@@ -181,6 +183,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3874352539178557575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731514320937625029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5dfa95fec552c418e84ce25623fcef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstPersonCamera: {fileID: 6215418163684121280}
+  thirdPersonCamera: {fileID: 3370881030789783809}
+--- !u!114 &9191164771213157226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731514320937625029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b64efde1d4f640498a708d8b83b037d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 6215418163684121280}
+  zoomedFOV: 15
+  normalFOV: 60
+  zoomSpeed: 2
 --- !u!1 &4199274758751566360
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +524,7 @@ GameObject:
   - component: {fileID: 7333126820310178488}
   - component: {fileID: 6215418163684121280}
   - component: {fileID: 7393400643625847623}
+  - component: {fileID: 7638133362242751271}
   m_Layer: 0
   m_Name: FirstPerson
   m_TagString: MainCamera
@@ -573,6 +606,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6076030832577698210}
   m_Enabled: 1
+--- !u!114 &7638133362242751271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076030832577698210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f123a0aaa899d4a94d0697b5964343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8427907997411232056}
+  mouseSens: 400
+  isFirstPerson: 1
 --- !u!1 &8780964678278642954
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +750,7 @@ GameObject:
   - component: {fileID: 6068378262399791250}
   - component: {fileID: 3370881030789783809}
   - component: {fileID: 8765779894278352856}
+  - component: {fileID: 5498925054150877115}
   m_Layer: 0
   m_Name: ThirdPerson
   m_TagString: Untagged
@@ -783,3 +832,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9161043522584556725}
   m_Enabled: 0
+--- !u!114 &5498925054150877115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9161043522584556725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f123a0aaa899d4a94d0697b5964343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8427907997411232056}
+  mouseSens: 400
+  isFirstPerson: 0

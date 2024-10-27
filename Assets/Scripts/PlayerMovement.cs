@@ -83,8 +83,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //codigo correr
-        if (Input.GetKeyDown(KeyCode.LeftShift) && floored && FloorChecker.GetComponent<Floored>().IsFloored())
+        if (Input.GetKey(KeyCode.LeftShift) && floored && FloorChecker.GetComponent<Floored>().IsFloored())
         {
+           Debug.Log("Corre");
            Correr(move);
         }
 
@@ -94,10 +95,10 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
     }
 
-    public void Correr(Vector3 movimiento)
+    private void Correr(Vector3 movimiento)
     {
 
-        rb.velocity = new Vector3(movimiento.x * moveSpeed, rb.velocity.y, movimiento.z * runSpeed);
+        rb.velocity = new Vector3(movimiento.x * runSpeed, rb.velocity.y, movimiento.z * runSpeed);
     }
 
     private void Jump()
