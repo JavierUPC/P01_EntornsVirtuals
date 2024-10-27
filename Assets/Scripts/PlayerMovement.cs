@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
+
         if (moveX != 0 || moveZ != 0) // Si el personaje se está moviendo
         {
             if (Input.GetKey(KeyCode.LeftShift) && floored && FloorChecker.GetComponent<Floored>().IsFloored()) // Si está corriendo
