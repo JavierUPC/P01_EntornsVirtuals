@@ -17,6 +17,7 @@ public class PortalKey : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             switchOn = true;
+            gameObject.SetActive(false);
         }
     }
 
