@@ -44,24 +44,35 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
-        if (move.x != 0 || move.z != 0) // Si el personaje se est� moviendo
+        if (moveX != 0 || moveZ != 0) // Si el personaje se está moviendo
         {
-            ArmsAnimaton.SetBool("isWalking", true); // Activar la animaci�n de caminar
+            if (Input.GetKey(KeyCode.LeftShift) && floored && FloorChecker.GetComponent<Floored>().IsFloored()) // Si está corriendo
+            {
+                ArmsAnimaton.SetBool("isRunning", true); // Activar la animación de correr
+                ArmsAnimaton.SetBool("isWalking", false); // Desactivar la animación de caminar
+            }
+            else // Si está caminando
+            {
+                ArmsAnimaton.SetBool("isWalking", true); // Activar la animación de caminar
+                ArmsAnimaton.SetBool("isRunning", false); // Desactivar la animación de correr
+            }
         }
-        else // Si el personaje esta quieto
+        else // Si el personaje está quieto
         {
-            ArmsAnimaton.SetBool("isWalking", false); // Activar la animaci�n de idle
+            ArmsAnimaton.SetBool("isWalking", false); // Activar la animación de idle
+            ArmsAnimaton.SetBool("isRunning", false); // Desactivar la animación de correr
+        }
+
+        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje está en el aire
+        {
+            ArmsAnimaton.SetBool("isJumping", true); // Activar la animación de saltar
+        }
+        else // Si el personaje está en el suelo
+        {
+            ArmsAnimaton.SetBool("isJumping", false); // Desactivar la animación de saltar
         }
 
 
-        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje se est� moviendo
-        {
-            ArmsAnimaton.SetBool("isJumping", true); // Activar la animaci�n de caminar
-        }
-        else // Si el personaje est� quieto
-        {
-            ArmsAnimaton.SetBool("isJumping", false); // Activar la animaci�n de idle
-        }
 
 
         //Salto - el "airtime" depende del tiempo que se mantenga el bot�n presionado
