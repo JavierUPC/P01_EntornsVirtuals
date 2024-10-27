@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject FloorChecker;
-    public Animator ArmsAnimaton; // Asegúrate de que este es el nombre correcto
+    public Animator ArmsAnimaton; // Asegï¿½rate de que este es el nombre correcto
 
 
     private Rigidbody rb;
@@ -15,10 +15,13 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 6f;
     public float jumpForce = 10f;
 
-    public float mouseSensitivity = 100f;
+    public float mouseSens = 100f;
     private float rotationX;
 
     private float mouseX, moveX, moveZ;
+    private float timer;
+    public float runSpeed = 12f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         floored = false;
         Cursor.lockState = CursorLockMode.Locked;
         rotationX = 0f;
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -40,41 +44,65 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(move.x * moveSpeed, rb.velocity.y, move.z * moveSpeed);
 
-
-
-
-
-        // Cambiar la animación de los brazos dependiendo de si el personaje se está moviendo
-        if (move.x != 0 || move.z != 0) // Si el personaje se está moviendo
+        if (move.x != 0 || move.z != 0) // Si el personaje se estï¿½ moviendo
         {
-            ArmsAnimaton.SetBool("isWalking", true); // Activar la animación de caminar
+            ArmsAnimaton.SetBool("isWalking", true); // Activar la animaciï¿½n de caminar
         }
-        else // Si el personaje está quieto
+        else // Si el personaje esta quieto
         {
-            ArmsAnimaton.SetBool("isWalking", false); // Activar la animación de idle
+            ArmsAnimaton.SetBool("isWalking", false); // Activar la animaciï¿½n de idle
         }
 
 
-        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje se está moviendo
+        if (!floored && !FloorChecker.GetComponent<Floored>().IsFloored()) // Si el personaje se estï¿½ moviendo
         {
-            ArmsAnimaton.SetBool("isJumping", true); // Activar la animación de caminar
+            ArmsAnimaton.SetBool("isJumping", true); // Activar la animaciï¿½n de caminar
         }
-        else // Si el personaje está quieto
+        else // Si el personaje estï¿½ quieto
         {
-            ArmsAnimaton.SetBool("isJumping", false); // Activar la animación de idle
-        }
-
-
-        if (floored && Input.GetKey(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
-        {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            ArmsAnimaton.SetBool("isJumping", false); // Activar la animaciï¿½n de idle
         }
 
-        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+
+        //Salto - el "airtime" depende del tiempo que se mantenga el botï¿½n presionado
+        if (floored && Input.GetKeyDown(KeyCode.Space) && FloorChecker.GetComponent<Floored>().IsFloored())
+        {
+            timer += Time.deltaTime;
+            Debug.Log("Jump1");
+        }
+        else if (Input.GetKey(KeyCode.Space) && timer > 0 && timer <= 0.5)
+        {
+            Debug.Log("Jump2");
+            timer += Time.deltaTime;
+            Jump();
+        }
+        else if(Input.GetKeyUp(KeyCode.Space) || timer >0.5)
+        {
+            Debug.Log("Jump3");
+            timer = 0;
+        }
+
+        //codigo correr
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+           Correr(move);
+        }
+
+        //Rotacion horizontal del personaje segun el movimiento del raton
+        mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
         rotationX += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
+    }
 
-        Debug.Log(FloorChecker.GetComponent<Floored>().IsFloored());
+    public void Correr(Vector3 movimiento)
+    {
+
+        rb.velocity = new Vector3(movimiento.x * moveSpeed, rb.velocity.y, movimiento.z * runSpeed);
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce/(1+Mathf.Pow(timer,2)), rb.velocity.z);
     }
 
     private void OnCollisionEnter(Collision collision)
